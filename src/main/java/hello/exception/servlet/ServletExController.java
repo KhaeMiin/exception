@@ -25,10 +25,10 @@ public class ServletExController {
 
     /**
      * sendError 흐름
-     * - WAS(sendError 호출 기록 확인) < 필터 < 서블릿 < 인터셉터 < 컨트롤러(response.sendError)
+     * - WAS(sendError 호출 기록 확인) < 필터 < 서블릿 < 인터셉터 < 컨트롤러(response.sendError) (dispatcherType=REQUEST)
      * WAS는 해당 예외를 처리하는 오류 페이지 정보를 확인한다.
      * (WebServerCustomizer.java > new ErrorPage(RuntimeException.class, "error-page/404")
-     * - WAS '/error-page/500' 다시 요청 > 필터 > 서블릿 > 인터셉터 > 컨트롤러(/error-page/404) > View
+     * - WAS '/error-page/500' 다시 요청 > 필터 > 서블릿 > 인터셉터 > 컨트롤러(/error-page/404) > View (dispatcherType=ERROR)
      * 서버 내부에서 다시 요청이 된다. (총 필터, 서블릿, 인터셉터, 컨트롤러가 2번씩 호출된다)
      */
     @GetMapping("/error-404")
