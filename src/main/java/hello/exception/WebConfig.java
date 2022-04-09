@@ -1,9 +1,11 @@
 package hello.exception;
 
 import hello.exception.filter.LogFilter;
+import hello.exception.interceptor.LogInterceptor;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import javax.servlet.DispatcherType;
@@ -12,7 +14,16 @@ import javax.servlet.Filter;
 @Configuration
 public class WebConfig implements WebMvcConfigurer {
 
-    @Bean
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LogInterceptor())
+                .order(1)
+                .addPathPatterns("/**")
+                .excludePathPatterns("/css/**", "*/ioc", "/error", "/error-page/**"); //오류 페이지 경로
+        //Interceptor는 DispatcherType이 따로 설정할 수 있는 방법이 없다. 그러므로 오류 페이지 경로를 excludePathPatterns에 넣어버리면 호출되지 않는다.
+    }
+
+//    @Bean
     public FilterRegistrationBean logFilter() {
         FilterRegistrationBean<Filter> filterFilterRegistrationBean = new FilterRegistrationBean<>();
         filterFilterRegistrationBean.setFilter(new LogFilter());
