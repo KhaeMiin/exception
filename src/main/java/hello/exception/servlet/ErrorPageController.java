@@ -54,7 +54,7 @@ public class ErrorPageController {
         result.put("status", request.getAttribute(ERROR_STATUS_CODE));//ERROR_STATUS_CODE는 상수 (헷갈릴까봐)
         result.put("message", ex.getMessage());
         Integer statusCode = (Integer) request.getAttribute(RequestDispatcher.ERROR_STATUS_CODE);
-        return new ResponseEntity<>(result, HttpStatus.valueOf(statusCode));
+        return new ResponseEntity<>(result, HttpStatus.valueOf(statusCode)); //ResponseEntity는 StatusField를 가지고 있기 때문에 상태코드(statusCode)는 필수적으로 포함해줘야 한다.
 
     }
 
