@@ -17,6 +17,10 @@ import java.util.Map;
  * 서버에서 예외가 터지면 그 예외가 서블릿 > WAS까지 전달되고 WAS는 오류페이지를 확인하고 다시 서블릿 > 컨트롤러 가서 view를 응답했다.
  * 이런식으로 과정이 너무 복잡하다.
  * WAS까지 예외를 그대로 보내지 말고 바로 ExceptionHandler에서 끝내자 (따라서 서블릿 컨테이너까지 에러가 올라가지 않게)
+ *
+ * 여기서 단점:
+ * JSON 정보를 response객체로 넣어줘야했다. 그리고 빈 ModelAndView를 반환했다.(API응답에는 불필요함)
+ * 이 문제점을 @ExceptionHandler 사용
  */
 @Slf4j
 public class UserHandlerExceptionResolver implements HandlerExceptionResolver {
